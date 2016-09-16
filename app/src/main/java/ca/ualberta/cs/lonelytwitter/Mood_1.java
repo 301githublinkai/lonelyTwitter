@@ -11,6 +11,10 @@ public class Mood_1 extends Mood{
         super(date);
     }
 
+    public  Mood_1(){
+        super();
+    }
+
     @Override
     public String return_mood() {
         return "mood1_happy!";
