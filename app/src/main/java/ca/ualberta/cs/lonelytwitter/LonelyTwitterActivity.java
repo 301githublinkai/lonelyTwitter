@@ -1,3 +1,9 @@
+/*
+Copyright (C) 2016 Team 20, CMPUT301, University of Alberta - All Rights Reserved.
+You  may use, copy or distribution this code under terms and conditions of University of Alberta
+and Code of Student Behavior.
+Please contact abc@abc.com for more details or questions.
+ */
 package ca.ualberta.cs.lonelytwitter;
 
 import java.io.BufferedReader;
@@ -14,7 +20,9 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +31,38 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+/**
+ * This class is the main view class in lonelyTwitter class.
+ * It deals with user inputs, saves/loads them in/from the file FILE_NAME (file.sav)
+ * <p>you can access this file form android device monitor. </>
+ * <pre> pre-formatted	test</>
+ * <code>
+ *     pseudo-code that is used in this class it as follows:
+ *     step1<br>
+ *     step2<br>
+ * </code>
+ * <ol>
+ *     <li>first item</li>
+ *     <li>second item</li>
+ * </ol>
+ * <ul>
+ *     <li>first item</li>
+ *     <li>second item</li>
+ * </ul>
+ * @author Qi
+ * @since 1.4
+ * @deprecated
+ * @see  NormalTweet
+ */
 public class LonelyTwitterActivity extends Activity {
 
+	/**
+	 * This is the name of the file that is saved in your virtual device.
+	 * you can access it through Android Device Monitor by selectiong you app,
+	 * then data -> data -> file.sav
+	 * @see NormalTweet
+	 * @author Linkai
+	 */
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
@@ -41,6 +79,18 @@ public class LonelyTwitterActivity extends Activity {
 		Button saveButton = (Button) findViewById(R.id.save);
 		Button clearButton = (Button) findViewById(R.id.clear);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
+
+		oldTweetsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+										   int pos, long id) {
+				// TODO Auto-generated method stub
+
+				Log.v("long clicked","pos: " + pos);
+
+				return true;
+			}
+		});
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -77,6 +127,11 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+	/**
+	 * this method loads the json file, generates the tweets from its contents.
+	 * @throws RuntimeException
+	 * @exception FileNotFoundException
+	 */
 	private void loadFromFile() {
 		ArrayList<String> tweets = new ArrayList<String>();
 		try {
