@@ -19,6 +19,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -63,11 +64,17 @@ public class LonelyTwitterActivity extends Activity {
 	 * @see NormalTweet
 	 * @author Linkai
 	 */
+
+	private Activity activity = this;
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
 	private ListView oldTweetsList;
 	private ArrayList<Tweet> tweetList = new ArrayList<Tweet>();
 	private ArrayAdapter<Tweet> adapter;
+
+	public ListView getOldTweetsList(){
+		return oldTweetsList;
+	}
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -117,6 +124,20 @@ public class LonelyTwitterActivity extends Activity {
 			}
 		});
 
+		oldTweetsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(activity, EditTweetActivity.class);
+				String listContent = tweetList.get(position).getMessage();
+				intent.putExtra("Content", listContent);
+				startActivity(intent);
+
+
+
+
+
+
+			}
+		});
 	}
 
 	@Override
